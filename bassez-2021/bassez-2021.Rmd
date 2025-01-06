@@ -13,6 +13,7 @@ output:
   word_document: default
 ---
 
+
 ```{r}
 globus_metadata <- read.table("/mnt/nmorais-nfs/marta/pC_myeinfobank/metadata/globus/bassez_metadata.txt")
 ```
