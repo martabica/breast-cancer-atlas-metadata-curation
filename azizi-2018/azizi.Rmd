@@ -1,0 +1,105 @@
+---
+title: "Azizi 2018 metadata"
+output:
+  pdf_document: default
+  html_notebook:
+    code_folding: hide
+    depth: 3
+    toc: yes
+    toc_float: yes
+  html_document:
+    df_print: paged
+    toc: yes
+  word_document: default
+---
+
+```{r}
+globus_metadata <- readRDS("/mnt/nmorais-nfs/marta/pC_myeinfobank/metadata/globus/processed/GSE114724_Azizi_10X.rds")
+```
+
+```{r}
+globus_metadata
+```
+
+```{r}
+colnames(globus_metadata)[1:5]
+```
+
+```{r}
+colnames(globus_metadata@meta.data)
+```
+
+```{r}
+table(globus_metadata$patient)
+table(globus_metadata$batch)
+table(globus_metadata$condition)
+table(globus_metadata$sex)
+table(globus_metadata$tissue)
+```
+
+```{r}
+metadata <- data.frame(Cell_ID = colnames(globus_metadata),
+                       Patient = globus_metadata$patient,
+                       Sample = globus_metadata$batch)
+rownames(metadata) <- NULL
+```
+
+```{r}
+metadata$Sample_Type <- "Fresh"
+metadata$Protocol <- "10X_chromium_5'"
+metadata$Technology <- "10X_Genomics"
+metadata$Dissociation <- "Mechanical,Enzymatic"
+metadata$CellOrNucleus <- "Cell"
+metadata$Sequencing_Machine <- "Illumina_NextSeq_500"
+metadata$Preprocessing <- "CellRanger_v.2.1.1"
+metadata$Reference_Genome <- "GRCh38"
+metadata$Gender <- "Female"
+metadata$Race <- NA
+metadata$Menopause <- "Post"
+metadata$Parity <- NA
+metadata$Tissue <- "Tumour"
+metadata$Treatment_Status <- NA
+metadata$Treatment_Type <- NA
+```
+
+```{r}
+metadata$Age <- metadata$Patient
+metadata$Age[metadata$Age == "BC9"] <- 65
+metadata$Age[metadata$Age == "BC10"] <- 73
+metadata$Age[metadata$Age == "BC11"] <- 50
+```
+
+```{r}
+metadata$Subtype <- metadata$Patient
+metadata$Subtype[metadata$Subtype == "BC9"] <- "ER+"
+metadata$Subtype[metadata$Subtype == "BC10"] <- "TNBC"
+metadata$Subtype[metadata$Subtype == "BC11"] <- "HER2+"
+```
+
+```{r}
+metadata$Grade <- metadata$Patient
+metadata$Grade[metadata$Grade == "BC9"] <- 2
+metadata$Grade[metadata$Grade == "BC10"] <- 3
+metadata$Grade[metadata$Grade == "BC11"] <- 3
+```
+
+```{r}
+metadata$Cancer_Type <- metadata$Patient
+metadata$Cancer_Type[metadata$Cancer_Type == "BC9"] <- "ILC"
+metadata$Cancer_Type[metadata$Cancer_Type == "BC10"] <- "IDC"
+metadata$Cancer_Type[metadata$Cancer_Type == "BC11"] <- "IDC"
+```
+
+
+```{r}
+metadata[1:5,]
+```
+
+```{r}
+#saveRDS(metadata, "azizi-2018-clinical-metadata.rds")
+```
+
+
+
+
+
